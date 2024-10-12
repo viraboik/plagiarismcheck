@@ -1,5 +1,5 @@
 TODOs:
-[TODO - Sprint 1](#todo_1)
+[TODO - Sprint 1](#docs/todos/todo_1.md)
 
 # Install dependency
 
