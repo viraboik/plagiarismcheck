@@ -24,18 +24,18 @@
     - [ ] Order by importance and stability
     - [ ] Availability of metrics
 
-- [ ] **1.4 Backlog**
-  - [ ] Formulate the backlog and rank items.
-  - [ ] Group the backlog items by sprints.
-  - [ ] Create a sprint plan for one sprint including roles and criteria for checking.
+- [X] **1.4 Backlog**
+  - [X] Formulate the backlog and rank items.
+  - [X] Group the backlog items by sprints.
+  - [X] Create a sprint plan for one sprint including roles and criteria for checking.
 
-- [ ] **1.5 UML Diagrams** (Create at least one diagram for each type)
-  - [ ] Use-case diagram
-  - [ ] Class diagram
-  - [ ] Sequence diagram
-  - [ ] Activity diagram
-  - [ ] State diagram
-  - [ ] Deployment diagram
+- [X] **1.5 UML Diagrams** (Create at least one diagram for each type)
+  - [X] Use-case diagram
+  - [X] Class diagram
+  - [X] Sequence diagram
+  - [X] Activity diagram
+  - [X] State diagram
+  - [X] Deployment diagram
 
 - [ ] **1.6 Mathematical Support**
   - [ ] Develop mathematical modeling for the project.
