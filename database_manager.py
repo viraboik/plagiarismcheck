@@ -89,11 +89,13 @@ class InMemoryDatabase(ABCDatabase):
 
             similar_ids |= set(list_of_documents_ids)
 
-            if list_of_documents_ids:
-                # TODO: add document mutation
-                for word_index, word in enumerate(window):
-                    document.plagiarized_words[index + word_index][1] = True
-                    document.plagiarized_words[index + word_index][2] |= list_of_documents_ids
+            if not list_of_documents_ids:
+                continue
+
+            # TODO: add document mutation
+            for word_index, word in enumerate(window):
+                document.plagiarized_words[index + word_index][1] = True
+                document.plagiarized_words[index + word_index][2] |= list_of_documents_ids
 
         all_words = len(document.words)
         plagiarized_words = len([word_info[1] for word_info in document.plagiarized_words if word_info[1]])
