@@ -1,5 +1,7 @@
 import nltk
 
+from consts import SIZE_OF_WINDOW
+
 nltk.download('punkt')
 
 
@@ -24,7 +26,7 @@ def split_text_by_words(text: str) -> list[tuple[str, int, int]]:
     return result
 
 
-def make_moving_windows(words: list[tuple[str, int, int]], size_of_window: int = 5) -> list[tuple]:
+def make_moving_windows(words: list[tuple[str, int, int]], size_of_window: int = SIZE_OF_WINDOW) -> list[tuple]:
     result = []
 
     # Create the moving windows
@@ -40,5 +42,5 @@ if __name__ == '__main__':
     # print(split_text_by_words(text))
     output1 = split_text_by_words("aaa bbb ccc, ddd. ")
     print(output1)
-    output2 = make_moving_windows(output1, 5)
+    output2 = make_moving_windows(output1, SIZE_OF_WINDOW)
     print(output2)

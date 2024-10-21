@@ -1,0 +1,1 @@
+SIZE_OF_WINDOW = 5
