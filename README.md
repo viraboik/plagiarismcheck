@@ -7,7 +7,14 @@ TODOs:
 pip install -r requirements.txt
 ```
 
-# Run server 
+# Run tests (optional)
+
+```commandline
+pytest
+```
+
+# Run server
+
 ```commandline
 uvicorn app:app --reload
 ```
