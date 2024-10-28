@@ -1,6 +1,9 @@
 import abc
+import os.path
 from collections import defaultdict
+from pathlib import Path
 
+from consts import DATA_DIR, ECODING
 from utils import split_text_by_words, make_moving_windows
 
 
@@ -48,17 +51,40 @@ class InMemoryDocument:
         self.plagiarized_words = [[w, False, set()] for w in self.words]
 
 
+def save_document_to_folder(document: InMemoryDocument):
+    os.makedirs(DATA_DIR, exist_ok=True)
+    file_path = os.path.join(DATA_DIR, f"{document.id}.txt")
+
+    with open(file_path, "w", encoding=ECODING) as f:
+        f.write(document.text)
+
+    return file_path
+
+
 class InMemoryDatabase(ABCDatabase):
-    def __init__(self):
+    def __init__(self, datadir=DATA_DIR):
         self.current_index = 0
         self.data: dict[int, str] = {}
 
         self.window_words: dict[tuple[str]: list[InMemoryDocument]] = defaultdict(list)
+        if datadir is not None:
+            initialize_database(self, datadir)
 
-    def add_text(self, text: str) -> InMemoryDocument:
-        document = InMemoryDocument(self.current_index, text)
-        self.data[self.current_index] = InMemoryDocument(self.current_index, text)
-        self.current_index += 1
+    def add_text(self, text: str, save_document=True, custom_index=None) -> InMemoryDocument:
+        if custom_index is None:
+            index = self.current_index
+            self.current_index += 1
+        else:
+            index = custom_index
+            self.current_index = max(custom_index, self.current_index + 1)
+
+        document = InMemoryDocument(index, text)
+        if save_document:
+            save_document_to_folder(document)
+
+        if index in self.data:
+            raise ValueError("This index was already used")
+        self.data[index] = InMemoryDocument(index, text)
 
         for window in document.words_in_moving_window:
             key = self.get_key_from_window(window)
@@ -102,6 +128,17 @@ class InMemoryDatabase(ABCDatabase):
         plagiarized_metric = plagiarized_words / all_words
 
         return plagiarized_metric
+
+
+def initialize_database(db: InMemoryDatabase, datadir: str):
+    file_path: Path = None
+    for file_path in Path(datadir).iterdir():
+        index = int(file_path.stem)
+        print(f"{index=}")
+        with open(file_path, 'r', encoding=ECODING) as f:
+            info = f.read()
+
+            db.add_text(info, save_document=False, custom_index=index)
 
 
 if __name__ == '__main__':
