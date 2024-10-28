@@ -20,6 +20,14 @@
             display: block;
             margin: 5px 0;
         }
+        textarea {
+
+            width: 100%;          /* Full width */
+            height: 60vh;         /* Two-thirds of the viewport height */
+            box-sizing: border-box; /* Ensures padding and border are included in width/height */
+            resize: none;         /* Optional: Prevents user from resizing */
+
+        }
     </style>
 </head>
 <body>
@@ -30,7 +38,7 @@
         <h2>Add Text</h2>
         <form id="addTextForm">
             <label for="textToAdd">Text:</label>
-            <input type="text" id="textToAdd" name="textToAdd" required>
+            <textarea id="textToAdd" name="textToAdd" required></textarea>
             <button type="submit">Add Text</button>
         </form>
         <div id="addTextResult"></div>
