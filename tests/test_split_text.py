@@ -18,10 +18,10 @@ class TestSplitTextByWords(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_split_text_with_multiple_spaces(self):
-        text = "word1   word2"
+        text = "word_1   word2"
         expected_result = [
-            ('word1', 0, 5),
-            ('word2', 8, 13)
+            ('word_1', 0, 6),
+            ('word2', 9, 14)
         ]
         result = split_text_by_words(text)
         self.assertEqual(result, expected_result)
@@ -33,11 +33,11 @@ class TestSplitTextByWords(unittest.TestCase):
         self.assertEqual(result, expected_result)
 
     def test_split_text_special_characters(self):
-        text = "@test!"
+        text = "test@test.com"
         expected_result = [
-            ('@', 0, 1),
-            ('test', 1, 5),
-            ('!', 5, 6)
+            ('test', 0, 4),
+            ('@', 4, 5),
+            ('test.com', 5, 13)
         ]
         result = split_text_by_words(text)
         self.assertEqual(result, expected_result)
