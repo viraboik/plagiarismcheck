@@ -47,10 +47,6 @@ async def get_html_page(request: Request):
     try:
         return templates.TemplateResponse(name='index.html', request=request)
     except Exception as e:
-        traceback.print_exception(type(e), e, e.__traceback__)
-        logging.exception(e)
-
-        logging.error(f"Error occurred: {str(e)}")
         raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
