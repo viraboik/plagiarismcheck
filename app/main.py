@@ -1,9 +1,18 @@
+import logging
+import traceback
+from pathlib import Path
+from traceback import print_exc, print_tb
+
+import uvicorn
 from fastapi import FastAPI, HTTPException
+from fastapi import Request
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 from starlette.middleware.cors import CORSMiddleware
 from starlette.responses import HTMLResponse
+from starlette.staticfiles import StaticFiles
 
-from database_manager import InMemoryDatabase
+from .database_manager import InMemoryDatabase
 
 # Create the FastAPI app
 app = FastAPI()
@@ -16,6 +25,10 @@ app.add_middleware(
 )
 # Use the example database implementation
 database = InMemoryDatabase()
+
+# Serve static files from the 'static' directory
+
+templates = Jinja2Templates(directory=Path(__file__).parent / "templates")
 
 
 # Request model for adding text
@@ -30,14 +43,15 @@ class SearchRequest(BaseModel):
 
 
 @app.get("/", response_class=HTMLResponse)
-async def get_html_page():
+async def get_html_page(request: Request):
     try:
-        file_path = "index.html"  # Path to your HTML file
-        with open(file_path, "r", encoding="utf-8") as file:
-            html_content = file.read()
-        return HTMLResponse(content=html_content)
-    except FileNotFoundError:
-        raise HTTPException(status_code=404, detail="HTML file not found")
+        return templates.TemplateResponse(name='index.html', request=request)
+    except Exception as e:
+        traceback.print_exception(type(e), e, e.__traceback__)
+        logging.exception(e)
+
+        logging.error(f"Error occurred: {str(e)}")
+        raise HTTPException(status_code=500, detail="Internal Server Error")
 
 
 # Endpoint to add text to the database
@@ -65,3 +79,7 @@ def search_similar_texts_by_exact_words_match(request: SearchRequest):
         return results
     except IndexError:
         raise HTTPException(status_code=404, detail="Text with given ID not found")
+
+
+def main():
+    uvicorn.run(app, host="127.0.0.1", port=8000)

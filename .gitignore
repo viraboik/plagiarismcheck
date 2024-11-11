@@ -1,5 +1,11 @@
+build
+dist
+plagiarism_check_app.egg-info
+
+
 .idea
 __pycache__/
 
 data
 tmp*
+

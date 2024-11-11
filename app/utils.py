@@ -1,6 +1,6 @@
 import nltk
 
-from consts import SIZE_OF_WINDOW
+from .consts import SIZE_OF_WINDOW
 
 nltk.download('punkt')
 

@@ -3,8 +3,8 @@ import os.path
 from collections import defaultdict
 from pathlib import Path
 
-from consts import DATA_DIR, ECODING
-from utils import split_text_by_words, make_moving_windows
+from .consts import DATA_DIR, ECODING
+from .utils import split_text_by_words, make_moving_windows
 
 
 class Document:
@@ -76,7 +76,7 @@ class InMemoryDatabase(ABCDatabase):
             self.current_index += 1
         else:
             index = custom_index
-            self.current_index = max(custom_index, self.current_index + 1)
+            self.current_index = max(custom_index + 1, self.current_index + 1)
 
         document = InMemoryDocument(index, text)
         if save_document:
@@ -131,10 +131,11 @@ class InMemoryDatabase(ABCDatabase):
 
 
 def initialize_database(db: InMemoryDatabase, datadir: str):
+    os.makedirs(datadir, exist_ok=True)
     file_path: Path = None
     for file_path in Path(datadir).iterdir():
         index = int(file_path.stem)
-        print(f"{index=}")
+
         with open(file_path, 'r', encoding=ECODING) as f:
             info = f.read()
 
