@@ -2,14 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name="plagiarism_check_app",
-    version="0.0.16",
+    version="0.0.18",
     packages=find_packages(),
     install_requires=[
-        "fastapi",
-        "uvicorn",
-        "nltk",
-        "pytest",
-        "jinja2"
+        "fastapi==0.115.0",
+        "uvicorn==0.31.1",
+        "nltk==3.9.1",
+        "pytest==8.3.3",
+        "jinja2==3.1.4"
     ],
     include_package_data=True,  # Ensure non-Python files are included
     package_data={  # Specify additional files to include
@@ -20,7 +20,7 @@ setup(
     },
     entry_points={
         "console_scripts": [
-            "start-my-fastapi=app.main:main",
+            "start-plagiarism-check-app=app.main:main",
         ],
     },
     description="A FastAPI app",
