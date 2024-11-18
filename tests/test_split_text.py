@@ -1,6 +1,6 @@
 import unittest
 
-from utils import split_text_by_words
+from app.utils import split_text_by_words
 
 
 class TestSplitTextByWords(unittest.TestCase):
